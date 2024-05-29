@@ -59,7 +59,7 @@ router.patch('/:id', getClient, async (req, res) => {
 // Delete a client
 router.delete('/:id', getClient, async (req, res) => {
   try {
-    await res.client.remove();
+    await Client.deleteOne({ _id: res.client._id });
     res.json({ message: 'Deleted Client' });
   } catch (err) {
     res.status(500).json({ message: err.message });
