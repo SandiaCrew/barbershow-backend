@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const clientController = require('../controllers/clientController');
-const Visit = require('../models/Visit'); // Add this line
+const Visit = require('../models/Visit'); // Add this line if not present
 
 // Existing routes
 router.get('/', clientController.getAllClients);
@@ -11,11 +11,11 @@ router.patch('/:id', clientController.getClient, clientController.updateClient);
 router.delete('/:id', clientController.getClient, clientController.deleteClient);
 
 // New route for fetching visits for a specific client
-router.get('/:clientId/visits', async (req, res) => { // Add this block
+router.get('/:clientId/visits', async (req, res) => { // Add this block if not present
   try {
     const clientId = req.params.clientId;
     const visits = await Visit.find({ clientId: clientId });
-    if (!visits) {
+    if (!visits.length) {
       return res.status(404).json({ message: 'Visits not found' });
     }
     res.status(200).json(visits);
