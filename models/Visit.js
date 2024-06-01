@@ -10,7 +10,6 @@ const visitSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  // Add other fields as necessary
 });
 
 module.exports = mongoose.model('Visit', visitSchema);

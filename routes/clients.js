@@ -11,11 +11,13 @@ router.patch('/:id', clientController.getClient, clientController.updateClient);
 router.delete('/:id', clientController.getClient, clientController.deleteClient);
 
 // New route for fetching visits for a specific client
-router.get('/:clientId/visits', async (req, res) => { // Add this block if not present
+router.get('/:clientId/visits', async (req, res) => {
   try {
     const clientId = req.params.clientId;
+    console.log("Fetching visits for clientId:", clientId); // Add this line
     const visits = await Visit.find({ clientId: clientId });
     if (!visits.length) {
+      console.log('No visits found for clientId:', clientId); // Add this line
       return res.status(404).json({ message: 'Visits not found' });
     }
     res.status(200).json(visits);
@@ -23,6 +25,7 @@ router.get('/:clientId/visits', async (req, res) => { // Add this block if not p
     console.error('Error fetching visits:', error);
     res.status(500).json({ message: 'Error fetching visits' });
   }
-}); // End of added block
+});
+
 
 module.exports = router;

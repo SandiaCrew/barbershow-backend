@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -25,6 +24,10 @@ mongoose.connect(process.env.MONGO_URI, {
 // Use the clients route
 const clientsRouter = require('./routes/clients');
 app.use('/clients', clientsRouter);
+
+// Use the visits route
+const visitsRouter = require('./routes/visits');
+app.use('/visits', visitsRouter); // Add this line
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
