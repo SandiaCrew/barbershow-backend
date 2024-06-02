@@ -8,7 +8,11 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://barbershow.netlify.app', // Replace with your Netlify domain
+  methods: 'GET,POST,PATCH,DELETE',
+  allowedHeaders: 'Content-Type,Authorization'
+}));
 app.use(express.json());
 
 // Connect to MongoDB
