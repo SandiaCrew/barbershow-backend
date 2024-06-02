@@ -8,11 +8,26 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
+// CORS configuration
+const allowedOrigins = [
+  'https://master--barbershow.netlify.app',
+  'https://barbershow.netlify.app'
+];
+
 app.use(cors({
-  origin: 'https://barbershow.netlify.app', // Replace with your Netlify domain
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   methods: 'GET,POST,PATCH,DELETE',
   allowedHeaders: 'Content-Type,Authorization'
 }));
+
 app.use(express.json());
 
 // Connect to MongoDB
